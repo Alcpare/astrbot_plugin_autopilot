@@ -1,0 +1,8 @@
+name: astrbot_plugin_autopilot
+display_name: 领航
+desc: AI主动值守 v1.3.3 — 定时发言 + 消息监听 + 好感度追踪 + 频率控制 + 发言过滤 + 注入防护 + 统一判断模型 + 高峰期自动切换
+version: 1.3.3
+author: Anonymous
+repo: https://github.com/Alcpare/astrbot_plugin_autopilot
+license: MIT
+
