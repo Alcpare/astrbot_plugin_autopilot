@@ -1,0 +1,284 @@
+{
+  "running_enabled": {
+    "description": "运行开关",
+    "type": "bool",
+    "hint": "关闭后暂停所有主动功能（定时发言/消息监听/后台展示）",
+    "default": true
+  },
+  "use_default_model": {
+    "description": "默认使用AI模型",
+    "type": "bool",
+    "hint": "开启后所有功能未指定专属模型时自动使用默认对话模型，关闭则未指定模型的功能跳过",
+    "default": true
+  },
+  "enable_proactive": {
+    "description": "定时发言开关",
+    "type": "bool",
+    "hint": "关闭后不执行定时主动发言",
+    "default": true
+  },
+  "enable_commands": {
+    "description": "手动指令开关",
+    "type": "bool",
+    "hint": "关闭后 /好感 /好感榜 指令不可用",
+    "default": true
+  },
+  "enable_context": {
+    "description": "上下文记录开关",
+    "type": "bool",
+    "hint": "关闭后不记录聊天上下文（主动发言判断无上下文）",
+    "default": true
+  },
+  "display_enabled": {
+    "description": "后台展示开关",
+    "type": "bool",
+    "hint": "关闭后不在控制台打印好感度总览",
+    "default": true
+  },
+  "affinity_integration": {
+    "description": "好感度联动全局开关",
+    "type": "bool",
+    "hint": "开启后所有发言路径（定时发言/消息监听/主动发消息）都会注入好感度变化给AI判断",
+    "default": true
+  },
+  "check_interval": {
+    "description": "主动检查间隔（秒）",
+    "type": "int",
+    "hint": "每隔多少秒检查一次是否主动发言，默认1800秒(30分钟)",
+    "default": 1800
+  },
+  "proactive_require_new_messages": {
+    "description": "主动发言需要新消息",
+    "type": "bool",
+    "hint": "开启后仅当会话在两次主动检查之间出现新消息时才进行发言判断，避免无人说话时反复自嗨",
+    "default": true
+  },
+  "ai_judge_enabled": {
+    "description": "AI判断是否发言",
+    "type": "bool",
+    "hint": "开启=先让AI判断此时是否值得发言再决定是否发送，关闭=定时直接发言",
+    "default": true
+  },
+  "cooldown_seconds": {
+    "description": "发言冷却时间（秒）",
+    "type": "int",
+    "hint": "同一会话两次主动发言的最小间隔，单位秒",
+    "default": 600
+  },
+  "max_context_messages": {
+    "description": "上下文消息数",
+    "type": "int",
+    "hint": "用于判断时读取的最近消息数",
+    "default": 10
+  },
+  "check_prompt": {
+    "description": "主动检查提示词",
+    "type": "text",
+    "hint": "决定如何参与对话的提示，回复'不发送'则沉默",
+    "default": "你是一个群聊/私聊AI助手。请基于聊天记录和好感度变化，决定如何参与对话。\n\n按以下优先级发言：\n1. 群里最近在聊的话题，接着聊（发表看法、接话、补充）\n2. 没人聊了/冷场了，主动找新话题（关心问候、分享趣事、发起讨论）\n3. 有值得说的话（提醒、有趣发现、好感度变化祝贺）\n\n注意：\n- 不要接那些已经很久没人接的话题（冷场话题不要翻出来）\n- 不要重复别人已经说过的话\n- 如果实在没什么好说的，请只回复\"不发送\"\n\n你要说的话（或\"不发送\"）："
+  },
+  "target_sessions": {
+    "description": "目标会话ID",
+    "type": "list",
+    "hint": "留空自动跟踪活跃会话；需要时填写 platform:type:id 格式的会话 ID",
+    "default": []
+  },
+  "affinity_enabled": {
+    "description": "启用好感度追踪",
+    "type": "bool",
+    "hint": "自动AI判断并记录好感度变化",
+    "default": true
+  },
+  "affinity_cooldown": {
+    "description": "好感评估冷却（秒）",
+    "type": "int",
+    "hint": "同一用户两次好感评估的最小间隔，单位秒",
+    "default": 300
+  },
+  "enable_status": {
+    "description": "状态查看开关",
+    "type": "bool",
+    "hint": "关闭后 /领航 和 /领航 状态 均不可使用",
+    "default": true
+  },
+  "persona_inject": {
+    "description": "全局人格注入总开关",
+    "type": "bool",
+    "hint": "开启后对所有输出自动注入LLM人格（定时发言/消息监听/主动发消息均生效）",
+    "default": true
+  },
+  "rememory_compat": {
+    "description": "记忆回溯兼容",
+    "type": "bool",
+    "hint": "发言前读取记忆回溯插件的历史记忆并注入给AI",
+    "default": true
+  },
+  "speak_frequency": {
+    "description": "发言频率控制",
+    "type": "string",
+    "hint": "档位内置频率要求+字数上限+最短字数+思考延迟: 极克制(50/7字,5-7秒)/克制(57/5字,4-6秒)/正常(72/3字,3-5秒)/活跃(87/2字,3-4秒)",
+    "default": "克制"
+  },
+  "global_frequency_inject": {
+    "description": "全局频率注入",
+    "type": "bool",
+    "hint": "开启后频率档位约束注入所有LLM请求（包括主对话回复），关闭则仅领航发言受约束",
+    "default": true
+  },
+  "think_delay_enabled": {
+    "description": "发送前思考延迟",
+    "type": "bool",
+    "hint": "回复前像人一样思考片刻（延迟时长由发言频率档位决定）",
+    "default": true
+  },
+  "time_personality_enabled": {
+    "description": "时段性格",
+    "type": "bool",
+    "hint": "不同时段AI状态不同: 深夜困倦话少/上午精神活泼/下午平稳/晚上放松",
+    "default": true
+  },
+  "memory_initiative_enabled": {
+    "description": "记忆联动",
+    "type": "bool",
+    "hint": "发言时主动提起之前聊过的事，像真人的记性一样",
+    "default": true
+  },
+  "flatten_newlines": {
+    "description": "压平回复换行",
+    "type": "bool",
+    "hint": "所有LLM回复发送前自动去掉换行/空行，像正常聊天一样",
+    "default": true
+  },
+  "listen_enabled": {
+    "description": "消息监听开关",
+    "type": "bool",
+    "hint": "被@或喊名字时自动触发AI发言",
+    "default": true
+  },
+  "listen_skip_at": {
+    "description": "被@时跳过监听",
+    "type": "bool",
+    "hint": "开启后被@时交给主对话回复（避免双回复），只有喊名字才触发监听",
+    "default": true
+  },
+  "listen_context_messages": {
+    "description": "监听上下文条数",
+    "type": "int",
+    "hint": "被召唤时读取该会话最近多少条消息作为上下文",
+    "default": 20
+  },
+  "listen_cooldown": {
+    "description": "监听触发冷却（秒）",
+    "type": "int",
+    "hint": "被召唤后多久内不再重复触发，单位秒",
+    "default": 30
+  },
+  "bot_names": {
+    "description": "机器人名字列表",
+    "type": "list",
+    "hint": "消息中出现这些名字时触发监听；示例：[\"助手\"]，请改成你自己的机器人名字",
+    "default": []
+  },
+  "filter_enabled": {
+    "description": "发言过滤模块开关",
+    "type": "bool",
+    "hint": "开启后用户发言先过过滤模块，放行才交LLM回答；指令/@机器人/管理员消息自动放行",
+    "default": false
+  },
+  "unified_judge_provider": {
+    "description": "统一判断模型",
+    "type": "string",
+    "hint": "好感度判断、定时发言判断、监听判断、过滤判断共用一个模型。留空则使用默认对话模型",
+    "_special": "select_provider",
+    "default": ""
+  },
+  "judge_provider": {
+    "description": "发言判断模型",
+    "type": "string",
+    "hint": "定时发言判断专用模型；留空则使用统一判断模型或默认模型",
+    "_special": "select_provider",
+    "default": ""
+  },
+  "listen_provider": {
+    "description": "监听判断模型",
+    "type": "string",
+    "hint": "消息监听判断专用模型；留空则使用统一判断模型或默认模型",
+    "_special": "select_provider",
+    "default": ""
+  },
+  "affinity_provider": {
+    "description": "好感判断模型",
+    "type": "string",
+    "hint": "好感度判断专用模型；建议用轻量模型；留空则使用统一判断模型或默认模型",
+    "_special": "select_provider",
+    "default": ""
+  },
+  "filter_judge_provider": {
+    "description": "过滤判断模型",
+    "type": "string",
+    "hint": "发言过滤AI判断专用模型；留空则使用统一判断模型或默认模型",
+    "_special": "select_provider",
+    "default": ""
+  },
+  "peak_hour_switch_enabled": {
+    "description": "高峰期自动切换",
+    "type": "bool",
+    "hint": "DeepSeek 高峰时段（每日9-12点、14-18点，价格翻倍）自动把主对话切到备用模型，省钱",
+    "default": true
+  },
+  "peak_hour_provider": {
+    "description": "高峰期备用模型",
+    "type": "string",
+    "hint": "高峰期主对话使用的模型。留空则使用统一判断模型",
+    "_special": "select_provider",
+    "default": ""
+  },
+  "filter_keywords": {
+    "description": "关键词黑名单",
+    "type": "list",
+    "hint": "消息命中任一关键词直接拦截（可添加多条）",
+    "default": []
+  },
+  "filter_min_chars": {
+    "description": "字数下限",
+    "type": "int",
+    "hint": "消息少于该字数拦截，0=不限制",
+    "default": 0
+  },
+  "filter_max_chars": {
+    "description": "字数上限",
+    "type": "int",
+    "hint": "消息超过该字数拦截，0=不限制",
+    "default": 0
+  },
+  "filter_rules": {
+    "description": "行为准则",
+    "type": "text",
+    "hint": "每条一行，写不允许的行为（如：禁止聊政治、禁止人身攻击）",
+    "default": ""
+  },
+  "filter_emotion_strategy": {
+    "description": "情感判断策略",
+    "type": "string",
+    "hint": "off=不判断情感 / 安抚=情绪激动时放行让AI安抚 / 回避=情绪激动时拦截不回答 / 审视=中立判断",
+    "default": "off"
+  },
+  "clear_affinity_button": {
+    "description": "清除好感榜",
+    "type": "bool",
+    "hint": "打开并保存后触发清理：仅保留65分及以上，其余重置为默认30分（触发后自动复位）",
+    "default": false
+  },
+  "clear_affinity_all_button": {
+    "description": "清空好感榜所有数据",
+    "type": "bool",
+    "hint": "打开并保存后彻底删除所有用户好感记录和事件，从头开始（触发后自动复位）",
+    "default": false
+  },
+  "clear_rememory_button": {
+    "description": "清除记忆回溯记忆库",
+    "type": "bool",
+    "hint": "打开并保存后删除记忆回溯插件的数据库文件，从零积累（触发后自动复位）",
+    "default": false
+  }
+}
